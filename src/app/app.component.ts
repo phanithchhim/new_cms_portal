@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { HeaderComponent } from "./share/header/header.component";
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,  // Mark the component as standalone
+  imports: [RouterModule, HeaderComponent],  // Import any necessary Angular modules directly
+  template: `
+    <router-outlet></router-outlet>
+    <!-- <app-header></app-header> -->
+
+  `,
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'new_cms_portal';
-}
+export class AppComponent { }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Portal Login</title>
+    <link rel="stylesheet" href="auth.component.css">
+
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="" class="logo">
+        <h2 class="portal-title">CMS Portal</h2>
+    </div>
+
+    <div class="main-content">
+        <div class="login-container">
+            <h2 class="login-title">CMS Portal Login</h2>
+            <form class="login-form">
+                <div class="input-group">
+                    <span class="icon">&#128203;</span>
+                    <select class="input-field" required>
+                        <option value="UAT-Preproduction">UAT-Preproduction</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="icon">&#128100;</span>
+                    <input type="text" class="input-field" placeholder="Enter User AD" required>
+                </div>
+                <div class="input-group">
+                    <span class="icon">&#128274;</span>
+                    <input type="password" class="input-field" placeholder="Enter Password" required>
+                </div>
+            
+                <button type="button" class="login-button" ng-click="onLogin()">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 09 - Aug - 2024 | AMK Microfinance Institution PLC. All rights reserved</p>
+    </footer>
+</body>
+</html>

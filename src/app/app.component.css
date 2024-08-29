@@ -1,0 +1,10 @@
+/* app.component.css */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Background color for the entire app */
+  margin: 0;
+  padding: 0;
+}
