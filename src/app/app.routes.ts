@@ -1,30 +1,29 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router, RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './core/auth/auth.component';
 import { HomeComponent } from './features/home/components/home.component';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './share/header/header.component';
+import { AuthService } from './core/auth/auth.service';
+import { AuthGuard } from './core/auth/auth.guard';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RedirectIfLoggedInGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) { }
+
+  canActivate(): boolean {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/home']);
+      return false; // Prevent access to login if already logged in
+    }
+    return true; // Allow access to login if not logged in
+  }
+}
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'login', component: AuthComponent },
-  { path: 'home', component: HomeComponent },
-  // Add more routes as needed
+  { path: '', redirectTo: '/auth', pathMatch: 'full' },
+  { path: 'auth', component: AuthComponent, canActivate: [RedirectIfLoggedInGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
 ];
 
-@NgModule({
-  declarations: [
-    AuthComponent,
-    HomeComponent,
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    AppComponent,
-    HeaderComponent
-  ],
-  providers: [],
-  bootstrap: [],
-})
-export class AppRoutingModule {}
+export const AppRoutes = RouterModule.forRoot(routes);

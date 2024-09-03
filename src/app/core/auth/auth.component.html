@@ -16,7 +16,7 @@
     <div class="main-content">
         <div class="login-container">
             <h2 class="login-title">CMS Portal Login</h2>
-            <form class="login-form">
+            <form class="login-form" (ngSubmit)="onLogin()">
                 <div class="input-group">
                     <span class="icon">&#128203;</span>
                     <select class="input-field" required>
@@ -25,14 +25,13 @@
                 </div>
                 <div class="input-group">
                     <span class="icon">&#128100;</span>
-                    <input type="text" class="input-field" placeholder="Enter User AD" required>
+                    <input type="text" class="input-field" placeholder="Enter User AD" [(ngModel)]="username" name="username" required>
                 </div>
                 <div class="input-group">
                     <span class="icon">&#128274;</span>
-                    <input type="password" class="input-field" placeholder="Enter Password" required>
+                    <input type="password" class="input-field" placeholder="Enter Password" [(ngModel)]="password" name="password" required>
                 </div>
-            
-                <button type="button" class="login-button" ng-click="onLogin()">Login</button>
+                <button type="submit" class="login-button">Login</button>
             </form>
         </div>
     </div>
