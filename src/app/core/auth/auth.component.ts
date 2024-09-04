@@ -1,28 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from './auth.service'; // Ensure AuthService is imported
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
+  standalone: true,
+  imports: [FormsModule],
 })
-export class AuthComponent {
-  loginForm: FormGroup;  // FormGroup for login form
-  errorMessage: string = '';  // To display error messages if any
+export class AuthComponent implements OnInit {
+  username: string = '';
+  password: string = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    // Initialize the form with form controls and validators
-    this.loginForm = this.fb.group({
-      environment: ['UAT-Preproduction', Validators.required],  // Environment selection field
-      userAD: ['', Validators.required],  // User AD input field
-      password: ['', Validators.required]  // Password input field
-    });
+  constructor(private router: Router, private authService: AuthService) { }
+
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/home']);
+    }
   }
 
-onLogin() {
-  console.log('onLogin method called');
-  // Your login logic here
-  this.router.navigate(['/home']);
-}
+  onLogin() {
+    console.log('Attempting login with:', this.username, this.password);
+    const success = this.authService.login(this.username, this.password);
+    if (success) {
+      console.log('Login successful');
+      this.router.navigate(['/home']);
+    } else {
+      console.log('Login failed');
+      alert('Invalid credentials');
+    }
+  }
 }
