@@ -14,4 +14,8 @@ import { RedirectIfLoggedInGuard } from './app.routes';
   styleUrls: ['./app.component.css'],
   providers: [RedirectIfLoggedInGuard],
 })
-export class AppComponent { }
+export class AppComponent {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
+}
