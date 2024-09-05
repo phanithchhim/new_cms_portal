@@ -1,26 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private apiUrl = 'https://localhost:7028/api/'; // Updated API base URL
+  // private apiUrl = 'https://localhost:7028/api/'; // Updated API base URL
+  private apiUrl = 'https://localhost:7028/api/'
 
   constructor(private http: HttpClient) { }
 
   // GET request to retrieve all users
+  // getUsers(): Observable<any> {
+  //   return this.http.get(`${this.apiUrl}/Users`);
+  // }
   getUsers(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(`${this.apiUrl}Users`).pipe(
+      catchError(this.handleError)
+    );
   }
+  
 
   // GET request to retrieve a single user by ID
-  getUserById(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/Users/${id}`);
+  getUserById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}Users/${id}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
+  
   // POST request to create a new user
   createUser(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Users`, data, {
@@ -39,4 +49,10 @@ export class ApiService {
   deleteUser(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/Users/${id}`);
   }
+
+private handleError(error: HttpErrorResponse): Observable<never> {
+  console.error('An error occurred:', error);
+  // Provide a user-friendly error message or a custom error object
+  return throwError(() => new Error('Something went wrong; please try again later.'));
+}
 }
